@@ -2,5 +2,7 @@
 	"shell-version": ["3.6", "3.8"],
 	"uuid": "all-windows@ezix.org",
 	"name": "All Windows",
+	"url": "https://github.com/lyonel/all-windows",
+	"version": 2,
 	"description": "List open windows of all workspaces"
 }
