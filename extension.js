@@ -104,6 +104,7 @@ const WindowList = new Lang.Class({
     activateWindow: function(metaWorkspace, metaWindow) {
         if(!metaWindow.is_on_all_workspaces()) { metaWorkspace.activate(global.get_current_time()); }
         metaWindow.unminimize(global.get_current_time());
+        metaWindow.unshade(global.get_current_time());
         metaWindow.activate(global.get_current_time());
     },
 
