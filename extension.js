@@ -51,7 +51,7 @@ const WindowList = new Lang.Class({
                 if(sticky_windows.length && (wks==0)) {
                     for ( let i = 0; i < sticky_windows.length; ++i ) {
                         let metaWindow = sticky_windows[i];
-                        let item = new PopupMenu.PopupMenuItem(metaWindow.get_title());
+                        let item = new PopupMenu.PopupMenuItem(ellipsizedWindowTitle(metaWindow));
                         item.connect('activate', Lang.bind(this, function() { this.activateWindow(metaWorkspace, metaWindow); } ));
                         item._window = sticky_windows[i];
                         let app = tracker.get_window_app(item._window);
@@ -81,7 +81,7 @@ const WindowList = new Lang.Class({
 
                     for ( let i = 0; i < windows.length; ++i ) {
                         let metaWindow = windows[i];
-                        let item = new PopupMenu.PopupMenuItem(windows[i].get_title());
+                        let item = new PopupMenu.PopupMenuItem(ellipsizedWindowTitle(windows[i]));
                         item.connect('activate', Lang.bind(this, function() { this.activateWindow(metaWorkspace, metaWindow); } ));
                         item._window = windows[i];
                         let app = tracker.get_window_app(item._window);
@@ -116,6 +116,17 @@ const WindowList = new Lang.Class({
 });
 
 let _windowlist;
+
+function ellipsizeString(s, l){
+    if(s.length > l) { 
+        return s.substr(0, l)+'...';
+    }
+    return s; 
+}
+
+function ellipsizedWindowTitle(w){
+    return ellipsizeString(w.get_title(), 100);
+}
 
 function init() {
 }
