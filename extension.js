@@ -56,7 +56,7 @@ const WindowList = new Lang.Class({
                         item._window = sticky_windows[i];
                         let app = tracker.get_window_app(item._window);
                         item._icon = app.create_icon_texture(24);
-                        item.addActor(item._icon, { align: St.Align.END });
+                        item.actor.add_actor(item._icon, { align: St.Align.END });
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
@@ -72,7 +72,7 @@ const WindowList = new Lang.Class({
                         item.actor.reactive = false;
                         item.actor.can_focus = false;
                         if(wks == global.screen.get_active_workspace().index()) {
-                            item.setShowDot(true);
+                            item.setOrnament(PopupMenu.Ornament.DOT);
                         }
                         this.menu.addMenuItem(item);
                         empty_menu = false;
@@ -86,7 +86,7 @@ const WindowList = new Lang.Class({
                         item._window = windows[i];
                         let app = tracker.get_window_app(item._window);
                         item._icon = app.create_icon_texture(24);
-                        item.addActor(item._icon, { align: St.Align.END });
+                        item.actor.add_actor(item._icon, { align: St.Align.END });
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
