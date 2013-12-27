@@ -16,8 +16,7 @@ const WindowList = new Lang.Class({
 	_init: function(){
 		this.parent(0.0, 'All Windows');
 
-        	this.statusLabel = new St.Label({ text: '\u2630' });
-        	this.actor.add_actor(this.statusLabel);
+		this.actor.add_child(new St.Icon({ icon_name: 'view-grid-symbolic', style_class: 'system-status-icon' }));
         	this.updateMenu();
 	},
 
