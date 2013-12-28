@@ -57,6 +57,7 @@ const WindowList = new Lang.Class({
 			let box = new St.BoxLayout( { x_expand: true  } );
                         item._icon = app.create_icon_texture(24);
                         box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+                        box.add(new St.Label({ text: ' ' }));
                         box.add(item._icon);
                         item.actor.add_actor(box);
                         this.menu.addMenuItem(item);
@@ -90,6 +91,7 @@ const WindowList = new Lang.Class({
 			let box = new St.BoxLayout( { x_expand: true  } );
                         item._icon = app.create_icon_texture(24);
                         box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+                        box.add(new St.Label({ text: ' ' }));
                         box.add(item._icon);
                         item.actor.add_actor(box);
                         this.menu.addMenuItem(item);
