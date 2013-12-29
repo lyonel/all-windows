@@ -20,7 +20,7 @@ To install this extension you can either
 
 Compatibility
 -------------
-This extension has been tested on GNOME 3.6 and 3.8.
+This extension has been tested on GNOME 3.6, 3.8 and 3.10.
 
 License
 -------
