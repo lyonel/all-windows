@@ -18,9 +18,12 @@ const WindowList = new Lang.Class({
 
 		this.actor.add_child(new St.Icon({ icon_name: 'view-grid-symbolic', style_class: 'system-status-icon' }));
         	this.updateMenu();
+
+		this._restacked = global.screen.connect('restacked', Lang.bind(this, this.updateMenu));
 	},
 
 	destroy: function() {
+		global.screen.disconnect(this._restacked);
         	this.parent();
     	},
 
@@ -105,7 +108,12 @@ const WindowList = new Lang.Class({
             item.actor.reactive = false;
             item.actor.can_focus = false;
             this.menu.addMenuItem(item);
+
+            this.actor.hide();
         }
+	else {
+	    this.actor.show();
+	}
     },
 
     activateWindow: function(metaWorkspace, metaWindow) {
