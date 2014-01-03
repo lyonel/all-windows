@@ -26,3 +26,6 @@ else
 		git clone ${URL} ${DIR} || exit 3
 	fi
 fi
+
+echo Restarting GNOME-Shell
+killall -HUP gnome-shell
