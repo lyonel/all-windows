@@ -23,7 +23,7 @@ else
 		echo If you are sure you want to replace it, please delete this folder and retry.
 		exit 4
 	else
-		git clone ${URL} ${DIR} || exit 3
+		git clone --branch 3.6-3.8 ${URL} ${DIR} || exit 3
 	fi
 fi
 
