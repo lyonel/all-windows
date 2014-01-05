@@ -5,6 +5,21 @@ DIR=all-windows@ezix.org
 URL=https://github.com/lyonel/all-windows.git
 
 which git 2> /dev/null > /dev/null || ( echo Could not find Git ; exit 1 )
+which gnome-shell 2> /dev/null > /dev/null || ( echo Could not find GNOME Shell ; exit 1 )
+
+GSVERSION=$(gnome-shell --version | awk '{ print $3; }')
+
+case $GSVERSION in
+3.6|3.6.*)
+	BRANCH="--branch 3.6-3.8"
+	;;
+3.8|3.8.*)
+	BRANCH="--branch 3.6-3.8"
+	;;
+*)
+	BRANCH=""
+	;;
+esac
 
 cd $HOME
 mkdir -p ${BASEDIR} 2> /dev/null
@@ -23,7 +38,7 @@ else
 		echo If you are sure you want to replace it, please delete this folder and retry.
 		exit 4
 	else
-		git clone ${URL} ${DIR} || exit 3
+		git clone ${BRANCH} ${URL} ${DIR} || exit 3
 	fi
 fi
 
