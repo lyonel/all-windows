@@ -14,9 +14,12 @@ There is nothing to configure.
 Installation
 ------------
 To install this extension you can either
- * use http://extensions.gnome.org
+ * use http://extensions.gnome.org (caution: it doesn't contain the most recent versions)
  * use the GNOME Tweaking tool
  * copy it under ~/.local/share/gnome-shell/extensions/all-windows@ezix.org/ in your home directory
+ * use the install.sh script to install automatically
+
+Note: you may have to explicitly enable the extension using the GNOME Tweaking tool after installation.
 
 Compatibility
 -------------
