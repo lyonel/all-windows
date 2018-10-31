@@ -19,11 +19,11 @@ const WindowList = new Lang.Class({
 		this.actor.add_child(new St.Icon({ icon_name: 'view-grid-symbolic', style_class: 'system-status-icon' }));
         	this.updateMenu();
 
-		this._restacked = global.screen.connect('restacked', Lang.bind(this, this.updateMenu));
+		this._restacked = global.display.connect('restacked', Lang.bind(this, this.updateMenu));
 	},
 
 	destroy: function() {
-		global.screen.disconnect(this._restacked);
+		global.display.disconnect(this._restacked);
         	this.parent();
     	},
 
@@ -34,10 +34,10 @@ const WindowList = new Lang.Class({
 
             let tracker = Shell.WindowTracker.get_default();
 
-            for ( let wks=0; wks<global.screen.n_workspaces; ++wks ) {
+            for ( let wks=0; wks<global.workspace_manager.n_workspaces; ++wks ) {
                 // construct a list with all windows
                 let workspace_name = Meta.prefs_get_workspace_name(wks);
-                let metaWorkspace = global.screen.get_workspace_by_index(wks);
+                let metaWorkspace = global.workspace_manager.get_workspace_by_index(wks);
                 let windows = metaWorkspace.list_windows();             
                 let sticky_windows = windows.filter(
                         function(w) {
@@ -73,11 +73,11 @@ const WindowList = new Lang.Class({
                     if(wks>0) {
                         this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
                     }
-                    if(global.screen.n_workspaces>1) {
+                    if(global.workspace_manager.n_workspaces>1) {
                         let item = new PopupMenu.PopupMenuItem(workspace_name);
                         item.actor.reactive = false;
                         item.actor.can_focus = false;
-                        if(wks == global.screen.get_active_workspace().index()) {
+                        if(wks == global.workspace_manager.get_active_workspace().index()) {
                             item.setOrnament(PopupMenu.Ornament.DOT);
                         }
                         this.menu.addMenuItem(item);
