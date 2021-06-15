@@ -3,6 +3,6 @@
 	"uuid": "all-windows@ezix.org",
 	"name": "All Windows",
 	"url": "https://github.com/lyonel/all-windows",
-	"version": 10,
+	"version": 11,
 	"description": "List open windows of all workspaces"
 }
