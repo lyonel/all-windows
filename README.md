@@ -23,7 +23,7 @@ Note: you may have to explicitly enable the extension using the GNOME Tweaking t
 
 Compatibility
 -------------
-This extension has been tested on GNOME 3.6-3.30, and 40.
+This extension has been tested on GNOME 3.6-3.30, 40, 41 and 44.
 
 License
 -------
