@@ -1,34 +1,31 @@
-const Lang = imports.lang;
 const St = imports.gi.St;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
-const Panel = imports.ui.panel;
 const Meta = imports.gi.Meta;
 const Shell = imports.gi.Shell;
+const GObject = imports.gi.GObject;
 
 
+const WindowList = GObject.registerClass({
+}, class WindowList extends PanelMenu.Button {
 
-const WindowList = new Lang.Class({
-	Name: 'WindowList.WindowList',
-	Extends: PanelMenu.Button,
+	_init() {
+		super._init(0.0, 'All Windows');
 
-	_init: function(){
-		this.parent(0.0, 'All Windows');
-
-		this.actor.add_child(new St.Icon({ icon_name: 'view-grid-symbolic', style_class: 'system-status-icon' }));
+		this.add_child(new St.Icon({ icon_name: 'view-grid-symbolic', style_class: 'system-status-icon' }));
         	this.updateMenu();
 
-		this._restacked = global.display.connect('restacked', Lang.bind(this, this.updateMenu));
-	},
+		this._restacked = global.display.connect('restacked', () => this.updateMenu());
+	}
 
-	destroy: function() {
+	destroy() {
 		global.display.disconnect(this._restacked);
-        	this.parent();
-    	},
+        	super.destroy();
+    	}
 
 	
-    updateMenu: function() {
+    updateMenu() {
         this.menu.removeAll();
         let empty_menu = true;
 
@@ -54,7 +51,7 @@ const WindowList = new Lang.Class({
                     for ( let i = 0; i < sticky_windows.length; ++i ) {
                         let metaWindow = sticky_windows[i];
                         let item = new PopupMenu.PopupMenuItem('');
-                        item.connect('activate', Lang.bind(this, function() { this.activateWindow(metaWorkspace, metaWindow); } ));
+                        item.connect('activate', () => this.activateWindow(metaWorkspace, metaWindow));
                         item._window = sticky_windows[i];
                         let app = tracker.get_window_app(item._window);
 			let box = new St.BoxLayout( { x_expand: true  } );
@@ -62,7 +59,7 @@ const WindowList = new Lang.Class({
                         box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
                         box.add(new St.Label({ text: ' ' }));
                         box.add(item._icon);
-                        item.actor.add_actor(box);
+                        item.add_actor(box);
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
@@ -75,8 +72,8 @@ const WindowList = new Lang.Class({
                     }
                     if(global.workspace_manager.n_workspaces>1) {
                         let item = new PopupMenu.PopupMenuItem(workspace_name);
-                        item.actor.reactive = false;
-                        item.actor.can_focus = false;
+                        item.reactive = false;
+                        item.can_focus = false;
                         if(wks == global.workspace_manager.get_active_workspace().index()) {
                             item.setOrnament(PopupMenu.Ornament.DOT);
                         }
@@ -88,7 +85,7 @@ const WindowList = new Lang.Class({
                     for ( let i = 0; i < windows.length; ++i ) {
                         let metaWindow = windows[i];
                         let item = new PopupMenu.PopupMenuItem('');
-                        item.connect('activate', Lang.bind(this, function() { this.activateWindow(metaWorkspace, metaWindow); } ));
+                        item.connect('activate', () => this.activateWindow(metaWorkspace, metaWindow));
                         item._window = windows[i];
                         let app = tracker.get_window_app(item._window);
 			let box = new St.BoxLayout( { x_expand: true  } );
@@ -96,7 +93,7 @@ const WindowList = new Lang.Class({
                         box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
                         box.add(new St.Label({ text: ' ' }));
                         box.add(item._icon);
-                        item.actor.add_actor(box);
+                        item.add_actor(box);
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
@@ -105,28 +102,27 @@ const WindowList = new Lang.Class({
 
         if (empty_menu) {
             let item = new PopupMenu.PopupMenuItem(_("No open windows"))
-            item.actor.reactive = false;
-            item.actor.can_focus = false;
+            item.reactive = false;
+            item.can_focus = false;
             this.menu.addMenuItem(item);
 
-            this.actor.hide();
+            this.hide();
         }
 	else {
-	    this.actor.show();
+	    this.show();
 	}
-    },
+    }
 
-    activateWindow: function(metaWorkspace, metaWindow) {
+    activateWindow(metaWorkspace, metaWindow) {
         if(!metaWindow.is_on_all_workspaces()) { metaWorkspace.activate(global.get_current_time()); }
-        metaWindow.unminimize(global.get_current_time());
-        metaWindow.unshade(global.get_current_time());
-        metaWindow.activate(global.get_current_time());
-    },
+        metaWindow.unminimize();
+        metaWindow.activate(0);
+    }
 
-     _onButtonPress: function(actor, event) {
+     _onButtonPress(actor, event) {
         this.updateMenu();
         this.parent(actor, event);
-    },
+    }
 
 });
 
@@ -140,17 +136,18 @@ function ellipsizeString(s, l){
 }
 
 function ellipsizedWindowTitle(w){
-    return ellipsizeString(w.get_title(), 100);
+    return ellipsizeString(w.get_title()||"-", 100);
 }
 
 function init() {
 }
 
 function enable() {
-	_windowlist = new WindowList;
+	_windowlist = new WindowList();
     	Main.panel.addToStatusArea('window-list', _windowlist, -1);
 }
 
 function disable() {
-	_windowlist.destroy();
+	if(_windowlist) { _windowlist.destroy(); }
+	_windowlist = null;
 }
