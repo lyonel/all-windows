@@ -1,14 +1,16 @@
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-const Meta = imports.gi.Meta;
-const Shell = imports.gi.Shell;
-const GObject = imports.gi.GObject;
+import St from 'gi://St';
+import Meta from 'gi://Meta';
+import Shell from 'gi://Shell';
+import GObject from 'gi://GObject';
 
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
-const WindowList = GObject.registerClass({
-}, class WindowList extends PanelMenu.Button {
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
+
+const WindowList = GObject.registerClass(
+class WindowList extends PanelMenu.Button {
 
 	_init() {
 		super._init(0.0, 'All Windows');
@@ -126,8 +128,6 @@ const WindowList = GObject.registerClass({
 
 });
 
-let _windowlist;
-
 function ellipsizeString(s, l){
     if(s.length > l) { 
         return s.substr(0, l)+'...';
@@ -139,15 +139,14 @@ function ellipsizedWindowTitle(w){
     return ellipsizeString(w.get_title()||"-", 100);
 }
 
-function init() {
-}
+export default class AllWindowsExtension extends Extension {
+    enable() {
+        this._windowlist = new WindowList();
+        Main.panel.addToStatusArea(this.uuid, this._windowlist, -1);
+    }
 
-function enable() {
-	_windowlist = new WindowList();
-    	Main.panel.addToStatusArea('window-list', _windowlist, -1);
-}
-
-function disable() {
-	if(_windowlist) { _windowlist.destroy(); }
-	_windowlist = null;
+    disable() {
+        this._windowlist.destroy();
+        this._windowlist = null;
+    }
 }

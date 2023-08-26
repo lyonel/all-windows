@@ -1,8 +1,7 @@
 {
-	"shell-version": ["42", "43", "44"],
+	"shell-version": ["45"],
 	"uuid": "all-windows@ezix.org",
 	"name": "All Windows",
 	"url": "https://ezix.org/src/lyonel/all-windows",
-	"version": 15,
 	"description": "List open windows of all workspaces"
 }
