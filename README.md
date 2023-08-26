@@ -21,7 +21,7 @@ Note: you may have to explicitly enable the extension after installation.
 
 Compatibility
 -------------
-This extension has been tested on GNOME 3.6-3.30, 40, 41, 42 and 44.
+This extension has been tested on GNOME 3.6-3.30, 40, 41, 42, 44 and 45.
 
 License
 -------
