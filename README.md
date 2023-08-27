@@ -14,7 +14,7 @@ There is nothing to configure.
 Installation
 ------------
 To install this extension you can either
- * use https://extensions.gnome.org (caution: it doesn't always contain the most recent versions)
+ * use the [GNOME Extensions hub](https://extensions.gnome.org/extension/704/all-windows/) (caution: it doesn't always contain the most recent versions)
  * copy it under ~/.local/share/gnome-shell/extensions/all-windows@ezix.org/ in your home directory
 
 Note: you may have to explicitly enable the extension after installation.
