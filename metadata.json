@@ -3,5 +3,6 @@
 	"uuid": "all-windows@ezix.org",
 	"name": "All Windows",
 	"url": "https://ezix.org/src/lyonel/all-windows",
+	"gettext-domain": "all-windows@ezix.org",
 	"description": "List open windows of all workspaces"
 }
