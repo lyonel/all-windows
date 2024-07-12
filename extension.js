@@ -58,10 +58,20 @@ class WindowList extends PanelMenu.Button {
                         let app = tracker.get_window_app(item._window);
 			let box = new St.BoxLayout( { x_expand: true  } );
                         item._icon = app.create_icon_texture(24);
-                        box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
-                        box.add(new St.Label({ text: ' ' }));
-                        box.add(item._icon);
-                        item.add_actor(box);
+			if(box.add) {
+				box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+				box.add(new St.Label({ text: ' ' }));
+				box.add(item._icon);
+			} else {
+				box.add_child(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+				box.add_child(new St.Label({ text: ' ' }));
+				box.add_child(item._icon);
+			}
+			if(item.add_actor) {
+                                item.add_actor(box);
+			} else {
+                                item.add_child(box);
+			}
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
@@ -92,10 +102,20 @@ class WindowList extends PanelMenu.Button {
                         let app = tracker.get_window_app(item._window);
 			let box = new St.BoxLayout( { x_expand: true  } );
                         item._icon = app.create_icon_texture(24);
-                        box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
-                        box.add(new St.Label({ text: ' ' }));
-                        box.add(item._icon);
-                        item.add_actor(box);
+                        if(box.add) {
+				box.add(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+				box.add(new St.Label({ text: ' ' }));
+				box.add(item._icon);
+			} else {
+				box.add_child(new St.Label({ text: ellipsizedWindowTitle(metaWindow), x_expand: true }));
+				box.add_child(new St.Label({ text: ' ' }));
+				box.add_child(item._icon);
+			}
+			if(item.add_actor) {
+                                item.add_actor(box);
+			} else {
+                                item.add_child(box);
+			}
                         this.menu.addMenuItem(item);
                         empty_menu = false;
                     }
@@ -142,7 +162,7 @@ function ellipsizedWindowTitle(w){
 export default class AllWindowsExtension extends Extension {
     enable() {
         this._windowlist = new WindowList();
-        Main.panel.addToStatusArea(this.uuid, this._windowlist, -1);
+        Main.panel.addToStatusArea(this.uuid, this._windowlist, -1, 'right');
     }
 
     disable() {

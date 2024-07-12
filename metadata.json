@@ -1,5 +1,5 @@
 {
-	"shell-version": ["45"],
+	"shell-version": ["45", "46"],
 	"uuid": "all-windows@ezix.org",
 	"name": "All Windows",
 	"url": "https://ezix.org/src/lyonel/all-windows",
